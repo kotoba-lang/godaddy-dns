@@ -1,7 +1,8 @@
 # ADR-0001: godaddy-dns-clj — portable Clojure, dry-run-first DNS agent
 
-- Status: Accepted (2026-06-25)
+- Status: Accepted — 実装済み・root main マージ済み (2026-06-25)
 - 関連: langchain-clj / langgraph-clj / computer-use-clj / browser-use-clj ADR-0001
+- superproject 記録: `90-docs/adr/2606251621-godaddy-dns-clj-dns-management-agent.md`
 
 ## 課題
 
@@ -69,3 +70,15 @@ Datalog で監査可能（「session s1 で変更したレコード」「example
 - 実運用では OTE → DRY_RUN=true で計画確認 → DRY_RUN=false で適用、の三段で安全に進める。
 - GoDaddy の書き込み API はアカウント条件で制限される場合があるが、設計上それに触れずとも
   開発が完結する。
+
+## 実装状況（closing, 2026-06-25）
+
+- **repo**: `com-junkawasaki/godaddy-dns-clj`（MIT, public, init `e279abf`）。
+- **submodule**: `orgs/com-junkawasaki/godaddy-dns-clj` を superproject `root` に登録、
+  pin `e279abf`（main fast-forward `4bbfe812`、GitHub Data API server-side commit）。
+- **名前空間**: `godaddydns.{dns,godaddy,tool,agent}`（全 `.cljc`）+
+  `examples/{jvm_host,dns_agent}.clj`。
+- **検証**: `clojure -M:test`（公開 git deps）/ `-M:dev:test`（local checkout）とも
+  **8 tests / 38 assertions / 0 failures**。dry-run（計画のみ・ゾーン不変・datom ログ）と
+  live（適用・`applied? true`）を end-to-end でアサート。
+- **次段**: 他プロバイダ IDns 実装、OTE→prod 実適用の e2e 検証。
