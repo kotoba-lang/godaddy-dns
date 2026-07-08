@@ -16,4 +16,8 @@
                         {:local/root "../langchain"}}}
   ;; runnable examples (JVM host: real HTTP via java.net.http + JSON)
   :examples {:extra-paths ["examples"]
-             :extra-deps {org.clojure/data.json {:mvn/version "2.5.1"}}}}}
+             :extra-deps {org.clojure/data.json {:mvn/version "2.5.1"}}}
+  ;; clj-kondo as a Clojars lib (no Homebrew/system install needed).
+  :lint {:replace-deps {clj-kondo/clj-kondo {:mvn/version "2024.11.14"}}
+         :main-opts ["-m" "clj-kondo.main" "--lint" "src" "test"
+                     "--fail-level" "error"]}}}
