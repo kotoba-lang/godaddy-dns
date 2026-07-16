@@ -131,8 +131,8 @@ See [docs/adr/0001-architecture.md](docs/adr/0001-architecture.md).
 clojure -M:test          # mock-only, no network, no key
 ```
 
-Workspace development against local checkouts (`../langgraph-clj`,
-`../langchain-clj`): `clojure -M:dev:test`.
+Workspace development against local checkouts (`../langgraph`,
+`../langchain`): `clojure -M:dev:test`.
 
 ## License
 
