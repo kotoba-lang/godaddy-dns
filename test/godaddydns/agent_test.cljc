@@ -1,6 +1,6 @@
 (ns godaddydns.agent-test
   (:require [clojure.test :refer [deftest is testing]]
-            [clojure.string :as str]
+            [kotoba.lang.text :as str]
             [godaddydns.dns :as dns]
             [godaddydns.agent :as agent]
             [langchain.model :as model]
