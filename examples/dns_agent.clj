@@ -23,7 +23,7 @@
     # actually apply, with Claude driving:
     DRY_RUN=false LLM=anthropic ANTHROPIC_API_KEY=… GODADDY_KEY=… GODADDY_SECRET=… \\
       clojure -M:examples -m dns-agent \"set the apex A record of example.com to 5.6.7.8\""
-  (:require [jvm-host :as host]
+  (:require [kotoba.lang.text] [jvm-host :as host]
             [godaddydns.dns :as dns]
             [godaddydns.godaddy :as godaddy]
             [godaddydns.agent :as agent]
@@ -48,11 +48,11 @@
       {:dns (demo-zone) :mock? true})))
 
 (defn -main [& args]
-  (let [task (clojure.string/join " " args)
+  (let [task (kotoba.lang.text/join " " args)
         dry-run (not= "false" (env "DRY_RUN" "true"))
         {:keys [dns mock?]} (make-dns)
         conn (db/create-conn agent/log-schema)]
-    (when (clojure.string/blank? task)
+    (when (kotoba.lang.text/blank? task)
       (println "usage: clojure -M:examples -m dns-agent \"<task>\"") (System/exit 1))
     (when mock?
       (println "⚠  GODADDY_KEY/SECRET unset — using an in-memory MOCK zone (demo)."))

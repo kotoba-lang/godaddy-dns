@@ -14,8 +14,8 @@
   ('@' for the apex). GoDaddy's PUT-by-(type,name) semantics REPLACE the
   full set of records for that pair — `-upsert-records!` follows that
   contract exactly so the mock and the real host agree."
-  #?(:clj (:require [clojure.string :as str])
-     :cljs (:require [clojure.string :as str])))
+  #?(:clj (:require [kotoba.lang.text :as str])
+     :cljs (:require [kotoba.lang.text :as str])))
 
 (defprotocol IDns
   "DNS host capability. All record maps use {:type :name :data :ttl}."
@@ -37,14 +37,14 @@
   upper-case type, default name '@', default ttl 600."
   [{:keys [type name data ttl] :as r}]
   (merge r
-         {:type (some-> (or type (:type r)) clojure.core/name str/upper-case)
+         {:type (some-> (or type (:type r)) clojure.core/name str/upper)
           :name (or name "@")
           :data data
           :ttl  (or ttl 600)}))
 
 (defn- match? [filt r]
   (let [{:keys [type name]} filt]
-    (and (or (nil? type) (= (str/upper-case (clojure.core/name type))
+    (and (or (nil? type) (= (str/upper (clojure.core/name type))
                             (:type r)))
          (or (nil? name) (= name (:name r))))))
 
@@ -59,7 +59,7 @@
     (->> (get-in @state [:zones domain])
          (filterv #(match? filt %))))
   (-upsert-records! [_ domain type name records]
-    (let [type (str/upper-case (clojure.core/name type))
+    (let [type (str/upper (clojure.core/name type))
           incoming (mapv (fn [r] (normalize-record (assoc r :type type :name name)))
                          records)]
       (swap! state update-in [:zones domain]
@@ -69,7 +69,7 @@
                    (into incoming))))
       incoming))
   (-delete-records! [_ domain type name]
-    (let [type (str/upper-case (clojure.core/name type))]
+    (let [type (str/upper (clojure.core/name type))]
       (swap! state update-in [:zones domain]
              (fn [recs]
                (vec (remove #(and (= (:type %) type) (= (:name %) name))

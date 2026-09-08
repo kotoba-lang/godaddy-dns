@@ -14,7 +14,7 @@
   caller) can see exactly what would happen. When false they execute and
   return `APPLIED: …`. This is the safety default for a destructive
   surface (DNS): plan first, apply on explicit opt-in."
-  (:require [godaddydns.dns :as dns]))
+  (:require [kotoba.lang.text] [godaddydns.dns :as dns]))
 
 (defn- fmt-record [{:keys [type name data ttl]}]
   (str type " " name " → " data " (ttl " (or ttl 600) ")"))
@@ -73,7 +73,7 @@
             :required ["domain" "type" "name" "data"]}
    :fn (fn [{:keys [domain type name data ttl]}]
          (let [ttl (or ttl 600)
-               change {:op :upsert :domain domain :type (clojure.string/upper-case type)
+               change {:op :upsert :domain domain :type (kotoba.lang.text/upper type)
                        :name name :data data :ttl ttl}]
            (if dry-run?
              (plan-change! plan-atom change)
@@ -90,11 +90,11 @@
             :required ["domain" "type" "name"]}
    :fn (fn [{:keys [domain type name]}]
          (let [change {:op :delete :domain domain
-                       :type (clojure.string/upper-case type) :name name}]
+                       :type (kotoba.lang.text/upper type) :name name}]
            (if dry-run?
              (plan-change! plan-atom change)
              (do (dns/-delete-records! dns domain type name)
-                 (str "APPLIED: delete " (clojure.string/upper-case type)
+                 (str "APPLIED: delete " (kotoba.lang.text/upper type)
                       " " name " in " domain)))))})
 
 (defn dns-tools

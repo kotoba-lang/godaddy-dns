@@ -19,7 +19,7 @@
   A non-2xx response becomes an ex-info — `langchain.tool/execute` turns
   that into an is_error tool result so the model can read the failure and
   recover, rather than the run crashing."
-  (:require [clojure.string :as str]
+  (:require [kotoba.lang.text :as str]
             [godaddydns.dns :as dns]))
 
 (def prod-base "https://api.godaddy.com")
@@ -56,13 +56,13 @@
          (mapv #(select-keys % [:domain :status]))))
   (-list-records [_ domain {:keys [type name]}]
     (let [path (cond-> (str "/v1/domains/" domain "/records")
-                 type (str "/" (str/upper-case (clojure.core/name type)))
+                 type (str "/" (str/upper (clojure.core/name type)))
                  (and type name) (str "/" (enc name)))]
       (->> (request conf :get path nil)
            (mapv #(-> (select-keys % [:type :name :data :ttl])
                       dns/normalize-record)))))
   (-upsert-records! [_ domain type name records]
-    (let [type (str/upper-case (clojure.core/name type))
+    (let [type (str/upper (clojure.core/name type))
           path (str "/v1/domains/" domain "/records/" type "/" (enc name))
           payload (mapv (fn [r] (-> (select-keys r [:data :ttl :priority :weight :port])
                                     (update :ttl #(or % 600))))
@@ -70,7 +70,7 @@
       (request conf :put path payload)
       (mapv #(dns/normalize-record (assoc % :type type :name name)) records)))
   (-delete-records! [_ domain type name]
-    (let [type (str/upper-case (clojure.core/name type))
+    (let [type (str/upper (clojure.core/name type))
           path (str "/v1/domains/" domain "/records/" type "/" (enc name))]
       (request conf :delete path nil)
       :deleted)))

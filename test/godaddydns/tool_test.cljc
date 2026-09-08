@@ -1,6 +1,6 @@
 (ns godaddydns.tool-test
   (:require [clojure.test :refer [deftest is testing]]
-            [clojure.string :as str]
+            [kotoba.lang.text :as str]
             [godaddydns.dns :as dns]
             [godaddydns.tool :as dtool]
             [langchain.tool :as tool]))
