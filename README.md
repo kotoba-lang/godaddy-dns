@@ -82,7 +82,7 @@ Extra tools sit alongside the DNS tools: `(agent/run {:tools [my-tool] …})`.
 
 ## Terminal usage
 
-`examples/dns_agent.clj` is a ready-to-run CLI. With no GoDaddy
+`examples/dns_agent.cljk` is a ready-to-run CLI. With no GoDaddy
 credentials it falls back to an in-memory mock zone, so you can try the
 whole loop offline:
 
@@ -102,7 +102,7 @@ DRY_RUN=false LLM=anthropic ANTHROPIC_API_KEY=… GODADDY_KEY=… GODADDY_SECRET
 Env: `GODADDY_KEY` / `GODADDY_SECRET` (unset → mock zone), `GODADDY_BASE`
 (default production; OTE = `https://api.ote-godaddy.com`), `DRY_RUN`
 (default `true`), `LLM` = `ollama` (default) | `gemini` | `anthropic`.
-`examples/jvm_host.clj` provides the JVM host capabilities (a
+`examples/jvm_host.cljk` provides the JVM host capabilities (a
 `java.net.http` `:http-fn`, `clojure.data.json`, and the model switch).
 
 > **Note on GoDaddy write access:** GoDaddy gates the records write API on
