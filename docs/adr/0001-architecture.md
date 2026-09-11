@@ -78,7 +78,7 @@ Datalog で監査可能（「session s1 で変更したレコード」「example
   pin `e279abf`（main fast-forward `4bbfe812`、GitHub Data API server-side commit）。
 - **名前空間**: `godaddydns.{dns,godaddy,tool,agent}`（全 `.cljc`）+
   `examples/{jvm_host,dns_agent}.clj`。
-- **検証**: `clojure -M:test`（公開 git deps）/ `-M:dev:test`（local checkout）とも
+- **検証**: `kbb -M:test`（公開 git deps）/ `-M:dev:test`（local checkout）とも
   **8 tests / 38 assertions / 0 failures**。dry-run（計画のみ・ゾーン不変・datom ログ）と
   live（適用・`applied? true`）を end-to-end でアサート。
 - **次段**: 他プロバイダ IDns 実装、OTE→prod 実適用の e2e 検証。

@@ -88,15 +88,15 @@ whole loop offline:
 
 ```sh
 # plan only (safe default), mock zone, local Ollama model:
-clojure -M:examples -m dns-agent "list records for example.com"
+kbb -M:examples -m dns-agent "list records for example.com"
 
 # plan against the real account (OTE test env):
 GODADDY_KEY=… GODADDY_SECRET=… GODADDY_BASE=https://api.ote-godaddy.com \
-  clojure -M:examples -m dns-agent "set the apex A record of example.com to 5.6.7.8"
+  kbb -M:examples -m dns-agent "set the apex A record of example.com to 5.6.7.8"
 
 # actually apply, with Claude driving:
 DRY_RUN=false LLM=anthropic ANTHROPIC_API_KEY=… GODADDY_KEY=… GODADDY_SECRET=… \
-  clojure -M:examples -m dns-agent "set the apex A record of example.com to 5.6.7.8"
+  kbb -M:examples -m dns-agent "set the apex A record of example.com to 5.6.7.8"
 ```
 
 Env: `GODADDY_KEY` / `GODADDY_SECRET` (unset → mock zone), `GODADDY_BASE`
@@ -128,11 +128,11 @@ See [docs/adr/0001-architecture.md](docs/adr/0001-architecture.md).
 ## Tests
 
 ```sh
-clojure -M:test          # mock-only, no network, no key
+kbb -M:test          # mock-only, no network, no key
 ```
 
 Workspace development against local checkouts (`../langgraph`,
-`../langchain`): `clojure -M:dev:test`.
+`../langchain`): `kbb -M:dev:test`.
 
 ## License
 
