@@ -3,7 +3,7 @@
 
   Zero third-party deps: HTTP and JSON are *injected* capabilities
   (`:http-fn`, `:json-read`, `:json-write`) — the same seam every
-  langchain-clj host uses (see examples/jvm_host.clj). That keeps this
+  langchain-clj host uses (see examples/jvm_host.cljk). That keeps this
   namespace pure .cljc, runnable on the JVM, SCI, or a Clojure-on-WASM
   host that supplies its own fetch.
 
