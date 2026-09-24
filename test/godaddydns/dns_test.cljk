@@ -1,5 +1,5 @@
 (ns godaddydns.dns-test
-  (:require [clojure.test :refer [deftest is testing]]
+  (:require [kotoba.test :refer [deftest is testing]]
             [godaddydns.dns :as dns]))
 
 (defn- zone []
