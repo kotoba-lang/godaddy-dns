@@ -14,7 +14,7 @@
       ANTHROPIC_API_KEY (required)
       ANTHROPIC_MODEL   optional (default claude-opus-4-8)"
   (:require [langchain.model :as model]
-            [clojure.data.json :as json])
+            [kotoba.json :as json])
   (:import [java.net URI]
            [java.net.http HttpClient HttpRequest HttpRequest$BodyPublishers
             HttpResponse$BodyHandlers]))
